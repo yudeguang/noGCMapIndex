@@ -7,28 +7,20 @@ package noGCMapIndex
 
 import "strconv"
 
-type NoGCMapInt struct {
-	usedDataLen int //切片data中当前已存放数据的数量
+type NoGCMapIndexInt struct {
+	usedDataLen int //外部存放数据的切片中当前已存放数据的数量
 	m           map[int]int
 }
 
 //需要预先确定大致数量，在不知道精确值的情况下，一般可以设定一个比实际数量稍大一点的值
-func NewInt(length int) *NoGCMapInt {
-	var n NoGCMapInt
+func NewInt(length int) *NoGCMapIndexInt {
+	var n NoGCMapIndexInt
 	n.m = make(map[int]int, length)
 	return &n
 }
 
-//通过KEY获得外部切片的下标
-func (n *NoGCMapInt) CreateIndex(key int) int {
-	if v, exist := n.m[key]; exist {
-		return v
-	}
-	return -1
-}
-
 //通过KEY生成外部切片的下标
-func (n *NoGCMapInt) GetIndex(key int) int {
+func (n *NoGCMapIndexInt) CreateIndex(key int) int {
 	_, exist := n.m[key]
 	if exist {
 		panic("can't add the key '" + strconv.Itoa(key) + "' for twice")
@@ -36,4 +28,12 @@ func (n *NoGCMapInt) GetIndex(key int) int {
 	n.m[key] = n.usedDataLen + 1
 	n.usedDataLen = n.usedDataLen + 1
 	return n.usedDataLen - 1
+}
+
+//通过KEY获得外部切片的下标
+func (n *NoGCMapIndexInt) GetIndex(key int) int {
+	if v, exist := n.m[key]; exist {
+		return v
+	}
+	return -1
 }
