@@ -33,7 +33,7 @@ func (n *NoGCMapIndexInt) CreateIndex(key int) int {
 //通过KEY获得外部切片的下标
 func (n *NoGCMapIndexInt) GetIndex(key int) int {
 	if v, exist := n.m[key]; exist {
-		return v
+		return v-1
 	}
 	return -1
 }

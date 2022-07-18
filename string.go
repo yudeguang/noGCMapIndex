@@ -46,10 +46,10 @@ func (n *NoGCMapIndexString) CreateIndex(key string) int {
 //通过KEY获得外部切片的下标
 func (n *NoGCMapIndexString) GetIndex(key string) int {
 	if v, exist := n.mapHasHashCollision[key]; exist {
-		return v
+		return v-1
 	}
 	if v, exist := n.mapWithoutHashCollision[xxhash.Sum64([]byte(key))]; exist {
-		return v
+		return v-1
 	}
 	return -1
 }
