@@ -1,4 +1,4 @@
 # noGCMapIndex
 
-废弃，见项目见 https://github.com/yudeguang/noGcStaticMap
+废弃，新项目见 https://github.com/yudeguang/noGcStaticMap
 
